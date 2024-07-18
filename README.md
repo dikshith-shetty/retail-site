@@ -32,7 +32,10 @@ http://localhost:8080/swagger-ui.html
 
 
 ## Sonar results
+https://sonarcloud.io/summary/overall?id=dikshith-shetty_retail-site
 
+## Class Diagram
+![Class Diagram](./ClassDiagramScreenshot.png)
 
 ## Built With
 

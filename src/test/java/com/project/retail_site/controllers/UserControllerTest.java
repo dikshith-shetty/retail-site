@@ -21,7 +21,6 @@ import com.project.retail_site.utils.TestUtils;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -56,7 +55,6 @@ class UserControllerTest {
                     .content(TestUtils.asJsonString(testUser))
 	                .contentType(MediaType.APPLICATION_JSON)
 	                .accept(MediaType.APPLICATION_JSON))
-                    .andDo(print())
                     .andExpect(status().isCreated())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andExpect(jsonPath("$.id", is(equalTo(testUser.getId())), Long.class))
@@ -69,7 +67,7 @@ class UserControllerTest {
     @Test
     void getUserTest() throws Exception {
         when(userService.getUserById(anyLong())).thenReturn(testUser);
-        this.mockMvc.perform(get("/users/{id}", 12)).andDo(print())
+        this.mockMvc.perform(get("/users/{id}", 12))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id", is(equalTo(testUser.getId())), Long.class))

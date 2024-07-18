@@ -1,0 +1,88 @@
+@startuml
+package "User Service" {
+    class User {
+        + Long id
+        + String name
+        + RoleEnum role
+        + LocalDate registrationDate
+    }
+
+    interface UserRepository {
+        + User findById(Long id)
+        + User save(User user)
+    }
+
+    interface UserService {
+        - UserRepository userRepository
+        + User getUserById(Long id)
+        + User saveUser(User user)
+    }
+
+    class UserServiceImpl implements UserService {}
+
+    class UserController {
+        - UserService userService
+        + User getUser(Long id)
+        + User createUser(User user)
+    }
+}
+
+package "Product Service" {
+    class Product {
+        + Long id
+        + String name
+        + CategoryEnum category
+        + BigDecimal price
+    }
+
+    interface ProductRepository {
+        + Product findById(Long id)
+        + Product save(Product product)
+    }
+
+    interface ProductService {
+        - ProductRepository productRepository
+        + Product getProductById(Long id)
+        + Product saveProduct(Product product)
+    }
+
+    class ProductServiceImpl implements ProductService {}
+
+    class ProductController {
+        - ProductService productService
+        + Product getProduct(Long id)
+        + Product createProduct(Product product)
+    }
+}
+
+package "Billing Service" {
+    class BillRequest {
+        + Long userId
+        + List<Long> productIds
+    }
+
+    interface DiscountService {
+        + Double amountAfterDiscount(User user, List<Product> products)
+    }
+
+    class SimpleDiscountService implements DiscountService {}
+
+    class BillingController {
+        - DiscountService discountService
+        - UserService userService
+        - ProductService productService
+        + Double amountAfterDiscount(BillRequest billRequest)
+    }
+}
+
+UserController --> UserService
+UserService --> UserRepository
+ProductController --> ProductService
+ProductService --> ProductRepository
+BillingController --> DiscountService
+BillingController --> UserService
+BillingController --> ProductService
+DiscountService --> User
+DiscountService --> Product
+
+@enduml
