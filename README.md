@@ -10,18 +10,18 @@ Is an application to Calculate discount depending on Discount types.
 
 ### Installing
 
-######Checkout the project from git
+###### Checkout the project from git
 
 ```
 git clone https://github.com/dikshith-shetty/retail-site.git
 ```
 
-######To run the application
+###### To run the application
 ```
 mvn spring-boot:run
 ```
 
-######To run tests
+###### To run tests
 
 ```
 mvn clean install
