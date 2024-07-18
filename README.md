@@ -35,12 +35,14 @@ http://localhost:8080/swagger-ui.html
 https://sonarcloud.io/summary/overall?id=dikshith-shetty_retail-site
 
 ## Class Diagram
+used PlantUML to create Class Diagram
 ![Class Diagram](./ClassDiagramScreenshot.png)
 
 ## Built With
 
 * [Java](https://docs.oracle.com/en/java/) - The language Java
 * [Spring Framework](https://spring.io/) - Spring framework
+
 
 ## Authors
 
