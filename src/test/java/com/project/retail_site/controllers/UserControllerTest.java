@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.project.retail_site.entities.User;
 import com.project.retail_site.enums.RoleEnum;
+import com.project.retail_site.exceptions.UserNotFoundException;
 import com.project.retail_site.services.UserService;
 import com.project.retail_site.utils.TestUtils;
 
@@ -26,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.containsString;
 
 
 @WebMvcTest(UserController.class)
@@ -74,6 +76,16 @@ class UserControllerTest {
             .andExpect(jsonPath("$.name", is(testUser.getName())))
             .andExpect(jsonPath("$.registrationDate", is(testUser.getRegistrationDate().toString())))
             .andExpect(jsonPath("$.role", is(testUser.getRole().toString())));
+    }
+
+    @Test
+    void getUserTestForUserNotFound() throws Exception {
+        Long userId = 136732l;
+        when(userService.getUserById(anyLong())).thenThrow(new UserNotFoundException(userId));
+        this.mockMvc.perform(get("/users/{id}", userId))
+            .andExpect(status().isNotFound())
+            .andExpect(content().string(containsString(userId.toString())));
+
     }
 
 

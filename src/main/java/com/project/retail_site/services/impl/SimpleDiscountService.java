@@ -34,7 +34,7 @@ public class SimpleDiscountService implements DiscountService {
         total = (total - discount);
         Double additionalDiscount = Math.floor(total/100) * 5;
         total = (total - additionalDiscount);
-        return (total > 0)? total:0;
+        return total;
     }
 }
 

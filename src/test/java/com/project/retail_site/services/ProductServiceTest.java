@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import com.project.retail_site.entities.Product;
 import com.project.retail_site.enums.CategoryEnum;
+import com.project.retail_site.exceptions.ProductNotFoundException;
 
 @SpringBootTest
 class ProductServiceTest {
@@ -60,5 +61,10 @@ class ProductServiceTest {
         Assertions.assertEquals(2, result.size());
         Assertions.assertTrue(result.stream().anyMatch(e -> e.getId() == rP.getId()));
         Assertions.assertTrue(result.stream().anyMatch(e -> e.getId() == pp.getId()));
+    }
+
+    @Test
+    void getProductByIdTestForNull() {
+        Assertions.assertThrowsExactly( ProductNotFoundException.class, () -> productService.getProductById(2344453l));
     }
 }

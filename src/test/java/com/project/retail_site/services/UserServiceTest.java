@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.project.retail_site.entities.User;
 import com.project.retail_site.enums.RoleEnum;
+import com.project.retail_site.exceptions.UserNotFoundException;
 
 @SpringBootTest
 class UserServiceTest {
@@ -35,5 +36,10 @@ class UserServiceTest {
         User uu = userService.saveUser(user);
         User ru = userService.getUserById(uu.getId());
         Assertions.assertEquals(uu, ru);
+    }
+
+    @Test
+    void getUserByIdforNull () {
+        Assertions.assertThrowsExactly(UserNotFoundException.class, () -> userService.getUserById(12234333l));
     }
 }

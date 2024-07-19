@@ -6,7 +6,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.hamcrest.Matchers.containsString;
@@ -20,8 +19,15 @@ class MvcLayerTest {
 	private MockMvc mockMvc;
 
     @Test
-	void shouldReturnDefaultMessage() throws Exception {
-		this.mockMvc.perform(get("/actuator/health")).andDo(print()).andExpect(status().isOk())
+	void healthCheck() throws Exception {
+		this.mockMvc.perform(get("/actuator/health")).andExpect(status().isOk())
 				.andExpect(content().string(containsString("UP")));
+	}
+
+	@Test
+	void urlNotFoundTest() throws Exception {
+		String invalidUrl = "invalid-url";
+		this.mockMvc.perform(get("/"+ invalidUrl)).andExpect(status().isNotFound())
+				.andExpect(content().string(containsString(invalidUrl)));
 	}
 }

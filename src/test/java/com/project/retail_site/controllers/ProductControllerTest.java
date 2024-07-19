@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.project.retail_site.entities.Product;
 import com.project.retail_site.enums.CategoryEnum;
+import com.project.retail_site.exceptions.ProductNotFoundException;
 import com.project.retail_site.services.ProductService;
 import com.project.retail_site.utils.TestUtils;
 
@@ -24,6 +25,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.containsString;
+
 
 @WebMvcTest(ProductController.class)
 class ProductControllerTest {
@@ -70,6 +73,14 @@ class ProductControllerTest {
     }
 
 
+    @Test
+    void getProductNotFoundTest() throws Exception {
+        Long productId = 127647l;
+        when(productService.getProductById(anyLong())).thenThrow(new ProductNotFoundException(productId));
+        this.mockMvc.perform(get("/products/{id}", productId))
+            .andExpect(status().isNotFound())
+            .andExpect(content().string(containsString(productId.toString())));
+    }
 }
 
 
