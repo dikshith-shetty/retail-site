@@ -13,7 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.project.retail_site.entities.Product;
-import com.project.retail_site.entities.User;
 import com.project.retail_site.enums.CategoryEnum;
 import com.project.retail_site.services.ProductService;
 import com.project.retail_site.utils.TestUtils;
